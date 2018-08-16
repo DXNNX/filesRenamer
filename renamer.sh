@@ -19,17 +19,15 @@ if [ ! -d "$1/output" ]
 then 
     mkdir "$1/output";
 fi
-
-for files in "$1/*.$2"; do
-
-	listFiles=$(echo $files | tr " " "\n")
-
-	for filename in $listFiles
-	do
-		original="${filename}";
+cd $1;
+cd ..;
+find $1 -iname '*.mp4' >> out;
+while read -r filename;
+do
+	original="${filename}";
     	filename=${filename#"$1/$3"};
-		filename=${filename%"$4.$2"};
-		cp $original "$1/output/$5$filename$6.$2";
-	done
-	echo "Operación finalizada!"
-done
+	filename=${filename%"$4.$2"};
+	cp "$original" "$1/output/$5$filename$6.$2";
+done < out
+echo "Operación finalizada!"
+rm out;
