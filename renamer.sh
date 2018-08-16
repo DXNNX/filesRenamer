@@ -15,19 +15,14 @@ then
  	exit 0;
 fi
 
-if [ ! -d "$1/output" ]
-then 
-    mkdir "$1/output";
-fi
-cd $1;
+cd "${1}";
 cd ..;
-find $1 -iname '*.mp4' >> out;
-while read -r filename;
-do
-	original="${filename}";
+find "$1" -iname '*.mp4' >> out;
+	while read -r filename;
+	do
+		original="${filename}";
     	filename=${filename#"$1/$3"};
-	filename=${filename%"$4.$2"};
-	cp "$original" "$1/output/$5$filename$6.$2";
-done < out
-echo "Operación finalizada!"
-rm out;
+		filename=${filename%"$4.$2"};
+		mv "$original" "$1/$5$filename$6.$2";
+	done < out
+	echo "Operación finalizada!"
